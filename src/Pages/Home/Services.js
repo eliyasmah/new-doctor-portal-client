@@ -52,10 +52,10 @@ const Services = () => {
               width="458px"
               height="576px"
               src={treatment}
-              className="max-w-sm rounded-lg shadow-2xl ml-24"
+              className=" rounded-lg shadow-2xl "
               alt="img"
             />
-            <div className="mx-24">
+            <div className="lg:px-24">
               <h1 className="text-5xl font-bold">
                 Exceptional Dental Care, on Your Terms
               </h1>
