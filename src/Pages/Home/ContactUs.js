@@ -14,7 +14,7 @@ const ContactUs = () => {
         <h1 className="text-secondary font-bold text-xl">Contact Us</h1>
         <h2 className="text-4xl text-white">Stay connected with us</h2>
       </div>
-      <div className="grid grid-cols-1 gap-5 justify-items-center py-8">
+      <div className="grid grid-cols-1 gap-5 justify-items-center p-8">
         <input
           type="email"
           placeholder="Email Address"
