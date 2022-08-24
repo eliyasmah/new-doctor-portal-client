@@ -11,12 +11,12 @@ const AppointmentBanner = ({ date, setDate }) => {
         background: `url(${bg})`,
         backgroundSize: "cover",
       }}
-      class="hero min-h-screen"
+      className="hero min-h-screen"
     >
-      <div class="hero-content flex-col lg:flex-row-reverse">
+      <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src={chair}
-          class="max-w-sm rounded-lg shadow-2xl"
+          className="max-w-sm rounded-lg shadow-2xl"
           alt="doctor chair"
         />
         <div className="lg:px-12">
