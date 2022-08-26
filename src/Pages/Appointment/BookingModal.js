@@ -1,14 +1,40 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { toast } from "react-toastify";
 
 const BookingModal = ({ date, treatment, setTreatment }) => {
   const { _id, name, slots } = treatment;
+  const formattedDate = format(date, "PP");
+  const [user, loading, error] = useAuthState(auth);
 
   const handleBooking = (event) => {
     event.preventDefault();
     const slot = event.target.slot.value;
-    console.log(_id, name, slot);
-    setTreatment(null);
+
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formattedDate,
+      slot,
+      patient: user.email,
+      patientName: user.displayName,
+      phone: event.target.phone.value,
+    };
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTreatment(null);
+      });
+    console.log(booking);
   };
   return (
     <div>
@@ -16,7 +42,7 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <label
-            for="booking-modal"
+            htmlFor="booking-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -38,23 +64,28 @@ const BookingModal = ({ date, treatment, setTreatment }) => {
               name="slot"
               className="select select-bordered w-full max-w-xs"
             >
-              {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
+              {slots.map((slot, index) => (
+                <option key={index} value={slot}>
+                  {slot}
+                </option>
               ))}
             </select>
             <input
               type="text"
-              placeholder="Full Name"
+              value={user?.displayName || ""}
+              disabled
               className="input input-bordered w-full max-w-xs"
             />
             <input
               type="text"
+              name="phone"
               placeholder="Phone Number"
               className="input input-bordered w-full max-w-xs"
             />
             <input
               type="email"
-              placeholder="Email"
+              value={user?.email || ""}
+              disabled
               className="input input-bordered w-full max-w-xs"
             />
             <input
