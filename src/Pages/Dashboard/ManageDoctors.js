@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../Shared/Loading";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 import DoctorRow from "./DoctorRow";
 
 const ManageDoctors = () => {
+  const [deletingDoctor, setDeletingDoctor] = useState(null);
   const {
     data: doctors,
     isLoading,
@@ -38,11 +40,19 @@ const ManageDoctors = () => {
                 doctor={doctor}
                 index={index}
                 refetch={refetch}
+                setDeletingDoctor={setDeletingDoctor}
               ></DoctorRow>
             ))}
           </tbody>
         </table>
       </div>
+      {deletingDoctor && (
+        <DeleteConfirmModal
+          deletingDoctor={deletingDoctor}
+          refetch={refetch}
+          setDeletingDoctor={setDeletingDoctor}
+        ></DeleteConfirmModal>
+      )}
     </div>
   );
 };
